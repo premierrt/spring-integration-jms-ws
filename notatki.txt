@@ -1,0 +1,43 @@
+klient jms activemq spring integration i gateway WS outbound
+_______________________________
+how to run:
+/home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
+http://127.0.0.1:8161/admin/index.jsp
+dodać kolejkę recznie zeby testow
+-------------------------------------------
+
+-jak z message jms (string) zrobic obiekt??? --> serializacja obiektu
+http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
+-service werjsciowy przyjmuje message, transformer trasforumuje na obiekt domenowy i wywoluje inny serwis,
+ ktory wywoluje transformer i ws
+-dodać klienta ws
+-przeniesc kofiguracje kolejki do xml-a -----> http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
+-dodać transformacje komunikatow na activeMQ
+
+https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
+http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
+https://dzone.com/articles/spring-boot-example-of-spring-integration-and-acti
+https://springframework.guru/spring-boot-example-of-spring-integration-and-activemq/
+
+
+
+
+ActiveMQ:
+/home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
+http://127.0.0.1:8161/admin/index.jsp
+dodać kolejkę recznie zeby testowac
+
+http://activemq.apache.org/getting-started.html#GettingStarted-TestingtheInstallationTestingtheInstallation
+http://blog.christianposta.com/spring-integration/backing-spring-integration-routes-with-activemq/
+
+http://activemq.apache.org/how-do-i-create-new-destinations.html
+
+
+jms spiring:
+https://dzone.com/articles/spring-jms-activemq
+http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
+
+
+Spring
+-configuration i Bean
+http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
