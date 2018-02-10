@@ -1,4 +1,4 @@
-klient jms activemq spring integration i gateway WS outbound
+klient jms activemq (canoncial model ) ---> spring integration  --> gateway WS outbound
 _______________________________
 how to run:
 /home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
@@ -6,13 +6,20 @@ http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
 
+
+--dopisać junity!!!
+--dopisac asercje i outbound capture:
+https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
+
 -jak z message jms (string) zrobic obiekt??? --> serializacja obiektu
 http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
 -service werjsciowy przyjmuje message, transformer trasforumuje na obiekt domenowy i wywoluje inny serwis,
  ktory wywoluje transformer i ws
--dodać klienta ws
+-dodać klienta ws  --> https://spring.io/guides/gs/consuming-web-service/ --> http://www.webservicex.com/New/Home/ServiceDetail/17
 -przeniesc kofiguracje kolejki do xml-a -----> http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
--dodać transformacje komunikatow na activeMQ
+-dodać druga apilikacje w modelu publish - subscriber
+-wysylac XML-a przez jms
+
 
 https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
 http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
@@ -33,11 +40,22 @@ http://blog.christianposta.com/spring-integration/backing-spring-integration-rou
 http://activemq.apache.org/how-do-i-create-new-destinations.html
 
 
-jms spiring:
+-jms spiring:
 https://dzone.com/articles/spring-jms-activemq
 http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
-
+-xml w jms 
+https://examples.javacodegeeks.com/enterprise-java/jms/jms-textmessage-example/
+https://www.javaworld.com/article/2076274/core-java/jms--an-infrastructure-for-xml-based-business-to-business-communication.html?page=3
+https://stackoverflow.com/questions/10368343/what-is-benefit-of-sending-xml-using-jms
+https://github.com/spring-projects/spring-integration/blob/master/spring-integration-jms/src/test/java/org/springframework/integration/jms/config/JmsWithMarshallingMessageConverterTests-context.xml
+https://docs.spring.io/spring-integration/reference/html/jms.html
 
 Spring
 -configuration i Bean
 http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
+
+
+EIP:
+-canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
+
+

@@ -1,12 +1,14 @@
 package rt.eureka.model;
 
+import java.io.Serializable;
+
 /**
  * https://docs.spring.io/spring-integration/reference/html/messaging-transformation-chapter.html
  * http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
  * @author rafal
  *
  */
-public class CustomerCanonical {
+public class CustomerCanonical implements Serializable {
 	private int id;
 	private String name;
 	private int yearOfBirth;

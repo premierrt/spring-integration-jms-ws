@@ -16,6 +16,17 @@
     	connection-factory="jmsConnectionFactory"
     />
     
-    <integration:service-activator id="serviceActivator" input-channel="inboundChannel" ref="inboundService" method="processInput">
+	<integration:channel id="canonicalChannel"></integration:channel>
+
+    <integration:transformer id="jmsToCanonicalTransformer" 
+	    input-channel="inboundChannel" 
+	    ref="canonicalTransformer" 
+	    method="transform" 
+	    output-channel="canonicalChannel">
+    </integration:transformer>
+    <bean id="canonicalTransformer" class="rt.eureka.model.CanonicalTransformer"></bean>
+    
+    
+    <integration:service-activator id="serviceActivator" input-channel="canonicalChannel" ref="inboundService" method="processInput">
     </integration:service-activator>
 </beans>
