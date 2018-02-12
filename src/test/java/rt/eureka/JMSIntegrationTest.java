@@ -1,5 +1,6 @@
 package rt.eureka;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import javax.jms.Connection;
@@ -13,11 +14,14 @@ import javax.jms.Session;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.rule.OutputCapture;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import rt.eureka.model.CustomerCanonical;
@@ -28,6 +32,12 @@ public class JMSIntegrationTest {
 
 	
 	CustomerCanonical canoncialCustomer;
+	
+	@Rule
+	public OutputCapture outputCapture = new OutputCapture();
+	
+	@Autowired
+	MessageChannel inboundChannel;
 	
 	@Autowired
 	@Qualifier("jmsConnectionFactory")
@@ -55,7 +65,7 @@ public class JMSIntegrationTest {
 		
 	}
 	@Test
-	public void test() {
+	public void e2eTest() {
 	
 		canoncialCustomer.setAdress("Polska");
 		canoncialCustomer.setId(1);
@@ -64,12 +74,18 @@ public class JMSIntegrationTest {
 			ObjectMessage om= jmsamqsession.createObjectMessage(canoncialCustomer);
 			jmsamqproducer.send(jmsamqdestination, om);
             Thread.sleep(3000L);
+            assertThat(this.outputCapture.toString().toUpperCase().contains("POLAND"));
 
 		} catch (JMSException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
+	}
+	
+	@Test
+	public void jmsInboudChannelTest(){
+		
 	}
 
 }
