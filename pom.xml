@@ -54,6 +54,12 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-broker</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.ws/spring-oxm -->
+<dependency>
+   <groupId>org.springframework</groupId>
+    <artifactId>spring-oxm</artifactId>
+</dependency>
+		
 	</dependencies>
 
 	<build>

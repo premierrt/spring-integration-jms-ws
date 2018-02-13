@@ -3,6 +3,9 @@ package rt.eureka;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
@@ -11,6 +14,7 @@ import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -91,13 +95,22 @@ public class JMSIntegrationTest {
 //	}
 	
 	@Test
-	public void createXMLTextMessageTest() throws JAXBException{
+	public void createXMLTextMessageTest() throws JAXBException, JMSException, InterruptedException{
+		
+		canoncialCustomer.setAdress("Polska");
+		canoncialCustomer.setId(1);
+		canoncialCustomer.setName("rafal");
 		JAXBContext jaxbContext = JAXBContext.newInstance(CustomerCanonical.class);
 		
 		Marshaller marsz = jaxbContext.createMarshaller();
 		marsz.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		marsz.marshal(canoncialCustomer, System.out);
-		
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		marsz.marshal(canoncialCustomer, outStream);
+		System.out.println(outStream.toString());
+		TextMessage tm = jmsamqsession.createTextMessage(outStream.toString());
+		jmsamqproducer.send(jmsamqdestination, tm);
+		Thread.sleep(3000L);
+      assertThat(this.outputCapture.toString().toUpperCase().contains("POLAND"));
 		
 	}
 	
