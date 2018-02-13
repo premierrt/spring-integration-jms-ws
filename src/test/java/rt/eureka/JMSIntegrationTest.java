@@ -11,6 +11,9 @@ import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,9 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.rule.OutputCapture;
+import org.springframework.integration.annotation.Payload;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ch.qos.logback.core.Context;
 import rt.eureka.model.CustomerCanonical;
 
 @RunWith(SpringRunner.class)
@@ -64,28 +71,36 @@ public class JMSIntegrationTest {
 		jmsamqconn.close();
 		
 	}
+//	@Test
+//	public void e2eTest() {
+//	
+//		canoncialCustomer.setAdress("Polska");
+//		canoncialCustomer.setId(1);
+//		canoncialCustomer.setName("rafal");
+//		try {
+//			ObjectMessage om= jmsamqsession.createObjectMessage(canoncialCustomer);
+//			jmsamqproducer.send(jmsamqdestination, om);
+//            Thread.sleep(3000L);
+//            assertThat(this.outputCapture.toString().toUpperCase().contains("POLAND"));
+//
+//		} catch (JMSException | InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	
+//	}
+	
 	@Test
-	public void e2eTest() {
-	
-		canoncialCustomer.setAdress("Polska");
-		canoncialCustomer.setId(1);
-		canoncialCustomer.setName("rafal");
-		try {
-			ObjectMessage om= jmsamqsession.createObjectMessage(canoncialCustomer);
-			jmsamqproducer.send(jmsamqdestination, om);
-            Thread.sleep(3000L);
-            assertThat(this.outputCapture.toString().toUpperCase().contains("POLAND"));
-
-		} catch (JMSException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	
-	@Test
-	public void jmsInboudChannelTest(){
+	public void createXMLTextMessageTest() throws JAXBException{
+		JAXBContext jaxbContext = JAXBContext.newInstance(CustomerCanonical.class);
+		
+		Marshaller marsz = jaxbContext.createMarshaller();
+		marsz.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		marsz.marshal(canoncialCustomer, System.out);
+		
 		
 	}
+	
+	
 
 }
