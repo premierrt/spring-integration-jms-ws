@@ -1,53 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jms="http://www.springframework.org/schema/integration/jms"
-       xmlns:integration="http://www.springframework.org/schema/integration"
-           xmlns:oxm="http://www.springframework.org/schema/oxm"  
-       
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
        http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
        http://www.springframework.org/schema/oxm  http://www.springframework.org/schema/oxm/spring-oxm.xsd       ">
-    
-    <integration:channel id="inboundChannel"></integration:channel>
-    
-    
-        	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt-->
-    <jms:message-driven-channel-adapter 
-    	id="jmsInboundAdapter"
-    	destination="rtInboundQueue"
-    	channel="inboundChannel"
-    	connection-factory="jmsConnectionFactory"
-    	    	message-converter="jaxbConverter"
-    	
-    	 />
-    	
-    	
-   
-   <!-- deklaracja konwertera -  bedzie korzystal  z jaxb --> 
-    <bean id="jaxbConverter" class="org.springframework.jms.support.converter.MarshallingMessageConverter">
-    	<property name="marshaller" ref="jaxb2Marshaller" />
-    	<property name="unmarshaller" ref="jaxb2Marshaller" />
+
+	<integration:channel id="inboundChannel"></integration:channel>
+
+
+	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt -->
+	<jms:message-driven-channel-adapter
+		id="jmsInboundAdapter" destination="rtInboundQueue" channel="inboundChannel"
+		connection-factory="jmsConnectionFactory" message-converter="jaxbConverter" />
+
+
+
+	<!-- deklaracja konwertera - bedzie korzystal z jaxb -->
+	<bean id="jaxbConverter"
+		class="org.springframework.jms.support.converter.MarshallingMessageConverter">
+		<property name="marshaller" ref="jaxb2Marshaller" />
+		<property name="unmarshaller" ref="jaxb2Marshaller" />
 	</bean>
-    
-    <!-- konfiguracja jaxb - wskazanie klasy na ktora bedzie mapowanie xmla -->
-    <oxm:jaxb2-marshaller id="jaxb2Marshaller">
-    	<oxm:class-to-be-bound name="rt.eureka.model.CustomerCanonical"/>
-    </oxm:jaxb2-marshaller>
-    
-    
+
+	<!-- konfiguracja jaxb - wskazanie klasy na ktora bedzie mapowanie xmla -->
+	<oxm:jaxb2-marshaller id="jaxb2Marshaller">
+		<oxm:class-to-be-bound name="rt.eureka.model.CustomerCanonical" />
+	</oxm:jaxb2-marshaller>
+
+
 	<integration:channel id="canonicalChannel"></integration:channel>
 
-    <integration:transformer id="jmsToCanonicalTransformer" 
-	    input-channel="inboundChannel" 
-	    ref="canonicalTransformer" 
-	    method="transform" 
-	    output-channel="canonicalChannel">
-    </integration:transformer>
-    <bean id="canonicalTransformer" class="rt.eureka.model.CanonicalTransformer"></bean>
-    
-    
-    <integration:service-activator id="serviceActivator" input-channel="canonicalChannel" ref="inboundService" method="processInput">
-    </integration:service-activator>
+	<integration:transformer id="jmsToCanonicalTransformer"
+		input-channel="inboundChannel" ref="canonicalTransformer" method="transform"
+		output-channel="canonicalChannel">
+	</integration:transformer>
+	<bean id="canonicalTransformer" class="rt.eureka.model.CanonicalTransformer"></bean>
+
+
+	<integration:service-activator id="serviceActivator"
+		input-channel="canonicalChannel" ref="inboundService" method="processInput">
+	</integration:service-activator>
 </beans>
