@@ -12,6 +12,8 @@
     
     <integration:channel id="inboundChannel"></integration:channel>
     
+    
+        	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt-->
     <jms:message-driven-channel-adapter 
     	id="jmsInboundAdapter"
     	destination="rtInboundQueue"
