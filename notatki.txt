@@ -19,7 +19,7 @@ http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
 -przeniesc kofiguracje kolejki do xml-a -----> http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
 -dodać druga apilikacje w modelu publish - subscriber
 -wysylac XML-a przez jms
-
+-----zrobic przyklad ze na si przetwarzam tylko xml-a - nie konwertuje na obiekt, tylko xpathem znajde fragment, filtrue, uzupelniam i wypycham do WS-a
 
 https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
 http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
@@ -43,7 +43,21 @@ http://activemq.apache.org/how-do-i-create-new-destinations.html
 -jms spiring:
 https://dzone.com/articles/spring-jms-activemq
 http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
--xml w jms 
+
+
+-xml w jms
+--najpierw marshaling danych na wesjsciu - czyli obiekt w obiekcie dodac anotacje w jaxb do xml i do string i wstawić jako textmessage
+https://www.mkyong.com/java/jaxb-hello-world-example/
+http://www.java2s.com/Code/Java/JDK-6/MarshalJavaobjecttoxmlandoutputtoconsole.htm
+
+--sprawdzic mozliwosc spingowego x/o marshallingu
+
+
+-- > podlaczyc unmarshallera:
+https://coderanch.com/t/314831/java/Creating-JMS-TextMessage-XML
+https://docs.spring.io/spring-ws/sites/1.5/reference/html/oxm.html
+https://github.com/spring-projects/spring-integration/blob/master/spring-integration-jms/src/test/java/org/springframework/integration/jms/config/JmsWithMarshallingMessageConverterTests.java
+ 
 https://examples.javacodegeeks.com/enterprise-java/jms/jms-textmessage-example/
 https://www.javaworld.com/article/2076274/core-java/jms--an-infrastructure-for-xml-based-business-to-business-communication.html?page=3
 https://stackoverflow.com/questions/10368343/what-is-benefit-of-sending-xml-using-jms
@@ -58,4 +72,9 @@ http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
 EIP:
 -canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
 
+
+maven:
+uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( dodac build-plugin-execution-goal
+https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+https://tech.pookey.co.uk/playing-with-activemq-using-maven/
 
