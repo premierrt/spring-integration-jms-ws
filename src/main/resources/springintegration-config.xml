@@ -34,6 +34,7 @@
 
 	<integration:channel id="canonicalChannel"></integration:channel>
 
+<!-- model kanoniczny na VO do wywolania uslugi -->
 	<integration:transformer id="jmsToCanonicalTransformer"
 		input-channel="inboundChannel" ref="canonicalTransformer" method="transform"
 		output-channel="canonicalChannel">

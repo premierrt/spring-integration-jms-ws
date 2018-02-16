@@ -22,6 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		 <activemq.version>5.15.2</activemq.version>
+		
 	</properties>
 
 	<dependencies>
@@ -49,11 +51,17 @@
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-jms</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-broker</artifactId>
 		</dependency>
+
+		   <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>${activemq.version}</version>
+            <scope>test</scope>
+        </dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.ws/spring-oxm -->
 <dependency>
    <groupId>org.springframework</groupId>
@@ -68,6 +76,32 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+        <groupId>org.apache.activemq.tooling</groupId>
+        <artifactId>maven-activemq-plugin</artifactId>
+        <version>5.7.0</version>
+        <configuration>
+          <configUri>xbean:file:src/main/resources/activemq.xml</configUri>
+          <fork>true</fork>
+          <systemProperties>
+           
+            <property>
+              <name>org.apache.activemq.default.directory.prefix</name>
+              <value>./target/</value>
+            </property>
+          </systemProperties>
+        </configuration>
+       <executions>
+                    <execution>
+                        <id>start-activemq</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>process-test-resources</phase>
+                    </execution>
+                </executions> 
+       
+      </plugin>
 		</plugins>
 	</build>
 

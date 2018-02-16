@@ -73,3 +73,8 @@ EIP:
 -canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
 
 
+maven:
+uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( dodac build-plugin-execution-goal
+https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+https://tech.pookey.co.uk/playing-with-activemq-using-maven/
+
