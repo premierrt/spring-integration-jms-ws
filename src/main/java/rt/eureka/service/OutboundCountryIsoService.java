@@ -9,6 +9,6 @@ public class OutboundCountryIsoService {
 
 	
 	public void processResponseFromWS(GetISOCountryCodeByCountyNameResponse response){
-		System.out.println(response.getGetISOCountryCodeByCountyNameResult());
+		System.out.println("================outbound Adapter: "+response.getGetISOCountryCodeByCountyNameResult());
 	}
 }

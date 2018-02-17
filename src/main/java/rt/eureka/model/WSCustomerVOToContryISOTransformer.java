@@ -12,7 +12,7 @@ public class WSCustomerVOToContryISOTransformer {
 		
 		GetISOCountryCodeByCountyName countryIso = new GetISOCountryCodeByCountyName();
 		countryIso.setCountryName(customerVO.getCountry());
-		System.out.println("========================================" + countryIso.getCountryName());
+		//System.out.println("========================================" + countryIso.getCountryName());
 		return countryIso;
 		
 	}

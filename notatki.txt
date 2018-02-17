@@ -1,10 +1,17 @@
+
 klient jms activemq (canoncial model ) ---> spring integration  --> gateway WS outbound
 _______________________________
 how to run:
+mvn test
+
 /home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
 http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
+
+
+--dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
+*************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
 
 
 --dopisać junity!!!
@@ -92,6 +99,7 @@ WebServices:
 https://www.javacodegeeks.com/2015/09/spring-integration-and-web-services.html
 -https://dzone.com/articles/spring-integration-hands-0
 
-soap action!!!!!!!!!!
+soap action!!!!!!!!!! w soap 1.1
+http://blog.michaelhidalgo.info/2012/10/is-soapaction-required-httpheader-to.html
 https://github.com/spring-projects/spring-integration-samples/blob/master/basic/testing-examples/src/main/resources/META-INF/spring/integration/04-externalgateway/real-gateways.xml
 

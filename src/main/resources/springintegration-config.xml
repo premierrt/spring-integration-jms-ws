@@ -48,34 +48,45 @@
 	<bean id="canonicalTransformer" class="rt.eureka.model.CanonicalTransformer"></bean>
 
 
-
+	<!-- kopiuje message do dwoch kanalow -->
 	<integration:recipient-list-router
 		id="listRouter" input-channel="canonicalChannel">
 		<integration:recipient channel="wsCountryRequestChannel" />
 		<integration:recipient channel="serviceActivatorChannel" />
 	</integration:recipient-list-router>
 
+	<!-- transformuje message na obiekt klasy która na wejsciu przyjmuje webservice 
+		- wygenrowanej z jaxb -->
 	<integration:transformer id="CustomerVOtoIsoCountry"
 		input-channel="wsCountryRequestChannel" output-channel="wsOutboundGataway"
 		ref="wSCustomerVOToContryISOTransformer" method="transform">
 	</integration:transformer>
 
 
-	<!-- gateway web service output -->
+	<!-- soap 1.1 wymaga naglówka soapAction -->
+	<int-ws:header-enricher id="soapHeaderEnricher"
+		input-channel="wsOutboundGataway" output-channel="wsCountryEnricherRequestChannel">
+		<int-ws:soap-action
+			value="http://www.webserviceX.NET/GetISOCountryCodeByCountyName" />
+	</int-ws:header-enricher>
+
+	<!-- gateway web service output. na wejsciu wiadomosc obiekt będący paremetrem 
+		wywoływanej uslugi. czyli request z jaxb -->
 	<!-- zmienic uri na parametr -->
 	<int-ws:outbound-gateway id="wsOutCountry"
-		request-channel="wsOutboundGataway" reply-channel="wsCountryResponseChannel"
-		uri="http://www.webservicex.net/country.asmx/GetISOCountryCodeByCountyName"
-		marshaller="wsCountryMarshaller" unmarshaller="wsCountryUnmarshaller" />
+		request-channel="wsCountryEnricherRequestChannel" reply-channel="wsCountryResponseChannel"
+		uri="http://www.webservicex.net/country.asmx" marshaller="wsCountryMarshaller"
+		unmarshaller="wsCountryUnmarshaller" />
 
 
-	<!-- marshaller dla usługi WS - request -->
+	<!-- marshaller dla usługi WS. Obiekt - paremetr wywolania metody uslugi 
+		marshaluje na xml -->
 	<oxm:jaxb2-marshaller id="wsCountryMarshaller">
 		<oxm:class-to-be-bound
 			name="rt.eureka.webservices.country.GetISOCountryCodeByCountyName" />
 	</oxm:jaxb2-marshaller>
 
-
+	<!-- unmarshaler. zamienia odpowiedz xml na obiekt reprezentujący odpowiedz. -->
 	<oxm:jaxb2-marshaller id="wsCountryUnmarshaller">
 		<oxm:class-to-be-bound
 			name="rt.eureka.webservices.country.GetISOCountryCodeByCountyNameResponse" />
