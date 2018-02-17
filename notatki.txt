@@ -67,10 +67,18 @@ https://docs.spring.io/spring-integration/reference/html/jms.html
 Spring
 -configuration i Bean
 http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
-
+---gdzie sie definiuje propertisy do xmla z beanami - np url ws-a
 
 EIP:
 -canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
+--recipientlistrouter vs publish subscriber?
+http://www.enterpriseintegrationpatterns.com/patterns/messaging/RecipientList.html
+-https://docs.spring.io/spring-integration/docs/2.1.1.RELEASE/reference/html/messaging-routing-chapter.html#router-implementations-recipientlistrouter
+--output channel adapter vs service activator
+The simple explanation is this. If you want to invoke a *void* method on a bean, then you can use OCA or SA.
+However, if you have non-void methods on the bean this means that your endpoint will not only receive a Message but will alos produce a Message which has to go somewhere and Service Activator allows you to define output-channel as well as input-channel.
+The bottom line is that adapters (both inbound and outbound) are unidirectional. The inbound generally implies the start of the flow and the outbound the end of the flow. And then there are gateway which is a whole other subject.
+
 
 
 maven:
@@ -78,3 +86,8 @@ uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( 
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 https://tech.pookey.co.uk/playing-with-activemq-using-maven/
 
+
+
+WebServices:
+https://www.javacodegeeks.com/2015/09/spring-integration-and-web-services.html
+-https://dzone.com/articles/spring-integration-hands-0
