@@ -1,10 +1,17 @@
+
 klient jms activemq (canoncial model ) ---> spring integration  --> gateway WS outbound
 _______________________________
 how to run:
+mvn test
+
 /home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
 http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
+
+
+--dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
+*************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
 
 
 --dopisać junity!!!
@@ -67,14 +74,32 @@ https://docs.spring.io/spring-integration/reference/html/jms.html
 Spring
 -configuration i Bean
 http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
-
+---gdzie sie definiuje propertisy do xmla z beanami - np url ws-a
 
 EIP:
 -canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html
+--recipientlistrouter vs publish subscriber?
+http://www.enterpriseintegrationpatterns.com/patterns/messaging/RecipientList.html
+-https://docs.spring.io/spring-integration/docs/2.1.1.RELEASE/reference/html/messaging-routing-chapter.html#router-implementations-recipientlistrouter
+--output channel adapter vs service activator
+The simple explanation is this. If you want to invoke a *void* method on a bean, then you can use OCA or SA.
+However, if you have non-void methods on the bean this means that your endpoint will not only receive a Message but will alos produce a Message which has to go somewhere and Service Activator allows you to define output-channel as well as input-channel.
+The bottom line is that adapters (both inbound and outbound) are unidirectional. The inbound generally implies the start of the flow and the outbound the end of the flow. And then there are gateway which is a whole other subject.
+
 
 
 maven:
 uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( dodac build-plugin-execution-goal
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 https://tech.pookey.co.uk/playing-with-activemq-using-maven/
+
+
+
+WebServices:
+https://www.javacodegeeks.com/2015/09/spring-integration-and-web-services.html
+-https://dzone.com/articles/spring-integration-hands-0
+
+soap action!!!!!!!!!! w soap 1.1
+http://blog.michaelhidalgo.info/2012/10/is-soapaction-required-httpheader-to.html
+https://github.com/spring-projects/spring-integration-samples/blob/master/basic/testing-examples/src/main/resources/META-INF/spring/integration/04-externalgateway/real-gateways.xml
 

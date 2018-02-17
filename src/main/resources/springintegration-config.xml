@@ -2,14 +2,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/integration/jms"
 	xmlns:integration="http://www.springframework.org/schema/integration"
-	xmlns:oxm="http://www.springframework.org/schema/oxm"
-
+	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:int-ws="http://www.springframework.org/schema/integration/ws"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
        http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
-       http://www.springframework.org/schema/oxm  http://www.springframework.org/schema/oxm/spring-oxm.xsd       ">
+       http://www.springframework.org/schema/oxm  http://www.springframework.org/schema/oxm/spring-oxm.xsd       
+         http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd">
 
 	<integration:channel id="inboundChannel"></integration:channel>
+	<integration:channel id="canonicalChannel"></integration:channel>
+	<integration:channel id="wsCountryRequestChannel"></integration:channel>
+	<integration:channel id="serviceActivatorChannel"></integration:channel>
+	<integration:channel id="wsCountryResponseChannel"></integration:channel>
+	<integration:channel id="wsOutboundGataway"></integration:channel>
+
+
 
 
 	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt -->
@@ -32,17 +39,68 @@
 	</oxm:jaxb2-marshaller>
 
 
-	<integration:channel id="canonicalChannel"></integration:channel>
 
-<!-- model kanoniczny na VO do wywolania uslugi -->
-	<integration:transformer id="jmsToCanonicalTransformer"
+	<!-- model kanoniczny na VO do wywolania uslugi -->
+	<integration:transformer id="canoncicaToWebSeviceVOTransformer"
 		input-channel="inboundChannel" ref="canonicalTransformer" method="transform"
 		output-channel="canonicalChannel">
 	</integration:transformer>
 	<bean id="canonicalTransformer" class="rt.eureka.model.CanonicalTransformer"></bean>
 
 
+	<!-- kopiuje message do dwoch kanalow -->
+	<integration:recipient-list-router
+		id="listRouter" input-channel="canonicalChannel">
+		<integration:recipient channel="wsCountryRequestChannel" />
+		<integration:recipient channel="serviceActivatorChannel" />
+	</integration:recipient-list-router>
+
+	<!-- transformuje message na obiekt klasy która na wejsciu przyjmuje webservice 
+		- wygenrowanej z jaxb -->
+	<integration:transformer id="CustomerVOtoIsoCountry"
+		input-channel="wsCountryRequestChannel" output-channel="wsOutboundGataway"
+		ref="wSCustomerVOToContryISOTransformer" method="transform">
+	</integration:transformer>
+
+
+	<!-- soap 1.1 wymaga naglówka soapAction -->
+	<int-ws:header-enricher id="soapHeaderEnricher"
+		input-channel="wsOutboundGataway" output-channel="wsCountryEnricherRequestChannel">
+		<int-ws:soap-action
+			value="http://www.webserviceX.NET/GetISOCountryCodeByCountyName" />
+	</int-ws:header-enricher>
+
+	<!-- gateway web service output. na wejsciu wiadomosc obiekt będący paremetrem 
+		wywoływanej uslugi. czyli request z jaxb -->
+	<!-- zmienic uri na parametr -->
+	<int-ws:outbound-gateway id="wsOutCountry"
+		request-channel="wsCountryEnricherRequestChannel" reply-channel="wsCountryResponseChannel"
+		uri="http://www.webservicex.net/country.asmx" marshaller="wsCountryMarshaller"
+		unmarshaller="wsCountryUnmarshaller" />
+
+
+	<!-- marshaller dla usługi WS. Obiekt - paremetr wywolania metody uslugi 
+		marshaluje na xml -->
+	<oxm:jaxb2-marshaller id="wsCountryMarshaller">
+		<oxm:class-to-be-bound
+			name="rt.eureka.webservices.country.GetISOCountryCodeByCountyName" />
+	</oxm:jaxb2-marshaller>
+
+	<!-- unmarshaler. zamienia odpowiedz xml na obiekt reprezentujący odpowiedz. -->
+	<oxm:jaxb2-marshaller id="wsCountryUnmarshaller">
+		<oxm:class-to-be-bound
+			name="rt.eureka.webservices.country.GetISOCountryCodeByCountyNameResponse" />
+	</oxm:jaxb2-marshaller>
+
+	<!-- konsumuje odpowiedz z web serviceu -->
+	<integration:outbound-channel-adapter
+		channel="wsCountryResponseChannel" id="outboundWSChannelAdpater" ref="outboundCountryIsoService"
+		method="processResponseFromWS">
+	</integration:outbound-channel-adapter>
+
 	<integration:service-activator id="serviceActivator"
-		input-channel="canonicalChannel" ref="inboundService" method="processInput">
+		input-channel="serviceActivatorChannel" ref="inboundService" method="processInput">
 	</integration:service-activator>
+
+
 </beans>

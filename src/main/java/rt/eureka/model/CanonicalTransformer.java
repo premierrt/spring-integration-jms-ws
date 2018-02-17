@@ -1,5 +1,8 @@
 package rt.eureka.model;
 
+import org.springframework.stereotype.Component;
+
+
 public class CanonicalTransformer {
 
 	
