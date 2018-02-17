@@ -91,3 +91,7 @@ https://tech.pookey.co.uk/playing-with-activemq-using-maven/
 WebServices:
 https://www.javacodegeeks.com/2015/09/spring-integration-and-web-services.html
 -https://dzone.com/articles/spring-integration-hands-0
+
+soap action!!!!!!!!!!
+https://github.com/spring-projects/spring-integration-samples/blob/master/basic/testing-examples/src/main/resources/META-INF/spring/integration/04-externalgateway/real-gateways.xml
+
