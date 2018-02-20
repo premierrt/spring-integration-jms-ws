@@ -18,7 +18,10 @@ public class InboundService {
 				DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		
 		        Date date = new Date();
+		        System.out.println("***"+Thread.currentThread().getName()+ " "+ Thread.currentThread().getId() );
+		        System.out.println("***********************"+InboundService.class.getName() + "**************************");
 				System.out.println("*************"+ message + " as of "+sdf.format(date)+" ***********  " );
+				System.out.println("************************************************************************************");
 		
 	}
 }

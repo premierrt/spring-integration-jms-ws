@@ -109,7 +109,7 @@ public class JMSIntegrationTest {
 		System.out.println(outStream.toString());
 		TextMessage tm = jmsamqsession.createTextMessage(outStream.toString());
 		jmsamqproducer.send(jmsamqdestination, tm);
-		Thread.sleep(7000L);
+		Thread.sleep(10000L);
     //  assertThat(this.outputCapture.toString().toUpperCase().contains("POLAND"));
 		
 	}
