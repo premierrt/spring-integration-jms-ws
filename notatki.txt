@@ -10,9 +10,9 @@ dodać kolejkę recznie zeby testow
 -------------------------------------------
 
 
---dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
++-dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
 *************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
-
++dodane queue do channela 
 
 --dopisać junity!!!
 --dopisac asercje i outbound capture:
@@ -72,9 +72,11 @@ https://github.com/spring-projects/spring-integration/blob/master/spring-integra
 https://docs.spring.io/spring-integration/reference/html/jms.html
 
 Spring
--configuration i Bean
+++ configuration i Bean
 http://techblog.outbrain.com/2014/05/so-long-spring-xmls/
----gdzie sie definiuje propertisy do xmla z beanami - np url ws-a
+++ gdzie sie definiuje propertisy do xmla z beanami - np url ws-a
+http://www.baeldung.com/properties-with-spring
+http://www.java2novice.com/spring/read-property-file-xml-config/
 
 EIP:
 -canonical model http://www.enterpriseintegrationpatterns.com/patterns/messaging/CanonicalDataModel.html

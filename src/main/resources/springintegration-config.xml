@@ -78,7 +78,7 @@ You have several queue channels. To receive Messages from them you should config
 	<int-ws:header-enricher id="soapHeaderEnricher"
 		input-channel="wsOutboundGataway" output-channel="wsCountryEnricherRequestChannel">
 		<int-ws:soap-action
-			value="http://www.webserviceX.NET/GetISOCountryCodeByCountyName" />
+			value="${webservice.soap-action}" />
 	</int-ws:header-enricher>
 
 	<!-- gateway web service output. na wejsciu wiadomosc obiekt będący paremetrem 
@@ -86,7 +86,7 @@ You have several queue channels. To receive Messages from them you should config
 	<!-- zmienic uri na parametr -->
 	<int-ws:outbound-gateway id="wsOutCountry"
 		request-channel="wsCountryEnricherRequestChannel" reply-channel="wsCountryResponseChannel"
-		uri="http://www.webservicex.net/country.asmx" marshaller="wsCountryMarshaller"
+		uri="${webservice.uri}" marshaller="wsCountryMarshaller"
 		unmarshaller="wsCountryUnmarshaller" />
 
 
