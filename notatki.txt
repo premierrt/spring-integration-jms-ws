@@ -88,6 +88,11 @@ The bottom line is that adapters (both inbound and outbound) are unidirectional.
 
 
 
+
+logging:
+http://www.logicbig.com/tutorials/misc/java-logging/apache-commons-logging/
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html
+
 maven:
 uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( dodac build-plugin-execution-goal
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
