@@ -9,23 +9,27 @@ http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
 
+-dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
+-z executorem
+-dodac publish subsrcibe na activeMQ - czyli 2 aplikacje zasubskrybowane na topic
+
 
 +-dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
 *************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
 +dodane queue do channela 
 
 --dopisać junity!!!
---dopisac asercje i outbound capture:
++-dopisac asercje i outbound capture:
 https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
 
--jak z message jms (string) zrobic obiekt??? --> serializacja obiektu
++ jak z message jms (string) zrobic obiekt??? --> serializacja obiektu
 http://www.coderpanda.com/jms-tutorial-sending-object-as-message-in-jms/
--service werjsciowy przyjmuje message, transformer trasforumuje na obiekt domenowy i wywoluje inny serwis,
++ service werjsciowy przyjmuje message, transformer trasforumuje na obiekt domenowy i wywoluje inny serwis,
  ktory wywoluje transformer i ws
--dodać klienta ws  --> https://spring.io/guides/gs/consuming-web-service/ --> http://www.webservicex.com/New/Home/ServiceDetail/17
++ dodać klienta ws  --> https://spring.io/guides/gs/consuming-web-service/ --> http://www.webservicex.com/New/Home/ServiceDetail/17
 -przeniesc kofiguracje kolejki do xml-a -----> http://www.javarticles.com/2015/02/example-of-message-driven-channel-adapter.html
 -dodać druga apilikacje w modelu publish - subscriber
--wysylac XML-a przez jms
++ wysylac XML-a przez jms
 -----zrobic przyklad ze na si przetwarzam tylko xml-a - nie konwertuje na obiekt, tylko xpathem znajde fragment, filtrue, uzupelniam i wypycham do WS-a
 
 https://examples.javacodegeeks.com/enterprise-java/spring/integration/spring-boot-integration-activemq-example/
