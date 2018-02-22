@@ -9,6 +9,9 @@ http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
 
+to do:
+-dodac junit dla transformatorow, servicow
+
 
 --dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
 *************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
