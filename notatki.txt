@@ -11,11 +11,12 @@ dodać kolejkę recznie zeby testow
 -------------------------------------------
 
 
+to do"
+--dodac findbug
+--spring profile
 -dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
 -z executorem
 -dodac publish subsrcibe na activeMQ - czyli 2 aplikacje zasubskrybowane na topic
-=======
-to do:
 -dodac junit dla transformatorow, servicow
 
 
@@ -110,6 +111,8 @@ maven:
 uruchamienia activeMQ przez maven. dodaje plugin i przypisuje go do fazy test ( dodac build-plugin-execution-goal
 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 https://tech.pookey.co.uk/playing-with-activemq-using-maven/
+---autoincremnt
+---https://stackoverflow.com/questions/8988405/automatically-incrementing-a-build-number-in-a-java-project
 
 
 
@@ -121,3 +124,13 @@ soap action!!!!!!!!!! w soap 1.1
 http://blog.michaelhidalgo.info/2012/10/is-soapaction-required-httpheader-to.html
 https://github.com/spring-projects/spring-integration-samples/blob/master/basic/testing-examples/src/main/resources/META-INF/spring/integration/04-externalgateway/real-gateways.xml
 
+
+
+
+Testy:
+Mockito:
+https://www.toptal.com/java/a-guide-to-everyday-mockito
+With Mockito, you create a mock, tell Mockito what to do when specific methods are called on it, and then use the mock instance in your test instead of the real thing. After the test, you can query the mock to see what specific methods were called or check the side effects in the form of changed state.
+https://kobietydokodu.pl/niezbednik-juniora-mockito/
+http://fruzenshtein.com/junit-and-mockito/
+https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4
