@@ -11,13 +11,24 @@
 
 	<integration:channel id="inboundChannel"></integration:channel>
 	<integration:channel id="canonicalChannel"></integration:channel>
-	<integration:channel id="wsCountryRequestChannel"></integration:channel>
-	<integration:channel id="serviceActivatorChannel"></integration:channel>
+	
+	<!-- kanał asynchroniczny - przez dodanie kolejki, która buforuje
+	Osobny wątek jest wykorzystaywany do pobierania z kolejki niż do wsadzania. 
+	https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html
+		 -->
+	<integration:channel id="wsCountryRequestChannel">
+		<integration:queue capacity="5"/>
+	</integration:channel>
+	<integration:channel id="serviceActivatorChannel">
+			<integration:queue capacity="5"/>
+	</integration:channel>
 	<integration:channel id="wsCountryResponseChannel"></integration:channel>
 	<integration:channel id="wsOutboundGataway"></integration:channel>
 
-
-
+<!-- globalny pooler
+You have several queue channels. To receive Messages from them you should configure <poller>: global one, or for each component, which are subscribed to those queues: Poller Configuration, Poller sample
+ -->
+<integration:poller default="true" fixed-delay="50"/>
 
 	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt -->
 	<jms:message-driven-channel-adapter
@@ -67,7 +78,7 @@
 	<int-ws:header-enricher id="soapHeaderEnricher"
 		input-channel="wsOutboundGataway" output-channel="wsCountryEnricherRequestChannel">
 		<int-ws:soap-action
-			value="http://www.webserviceX.NET/GetISOCountryCodeByCountyName" />
+			value="${webservice.soap-action}" />
 	</int-ws:header-enricher>
 
 	<!-- gateway web service output. na wejsciu wiadomosc obiekt będący paremetrem 
@@ -75,7 +86,7 @@
 	<!-- zmienic uri na parametr -->
 	<int-ws:outbound-gateway id="wsOutCountry"
 		request-channel="wsCountryEnricherRequestChannel" reply-channel="wsCountryResponseChannel"
-		uri="http://www.webservicex.net/country.asmx" marshaller="wsCountryMarshaller"
+		uri="${webservice.uri}" marshaller="wsCountryMarshaller"
 		unmarshaller="wsCountryUnmarshaller" />
 
 
