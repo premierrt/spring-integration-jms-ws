@@ -12,7 +12,8 @@ dodać kolejkę recznie zeby testow
 
 
 to do"
---dodac findbug
+
+
 --spring profile
 -dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
 -z executorem
@@ -134,3 +135,8 @@ With Mockito, you create a mock, tell Mockito what to do when specific methods a
 https://kobietydokodu.pl/niezbednik-juniora-mockito/
 http://fruzenshtein.com/junit-and-mockito/
 https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4
+
+
+FindBugs:
+http://www.baeldung.com/intro-to-findbugs
+https://www.petrikainulainen.net/programming/maven/findbugs-maven-plugin-tutorial/
