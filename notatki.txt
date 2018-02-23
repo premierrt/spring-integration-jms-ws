@@ -2,6 +2,7 @@
 klient jms activemq (canoncial model ) ---> spring integration  --> gateway WS outbound
 _______________________________
 how to run:
+/home/rafal/sts-devel-projekty/spring_boot_si_jms_consumer
 mvn test
 
 /home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
