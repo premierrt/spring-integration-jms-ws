@@ -9,9 +9,15 @@ http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
 
+
 -dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
 -z executorem
 -dodac publish subsrcibe na activeMQ - czyli 2 aplikacje zasubskrybowane na topic
+=======
+to do:
+-dodac junit dla transformatorow, servicow
+
+
 
 
 +-dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
