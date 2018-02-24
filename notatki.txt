@@ -12,7 +12,8 @@ dodać kolejkę recznie zeby testow
 
 
 to do"
-
+--junit best practises:
+http://www.kyleblaney.com/junit-best-practices/
 
 --spring profile
 -dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
