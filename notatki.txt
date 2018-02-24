@@ -11,7 +11,10 @@ dodać kolejkę recznie zeby testow
 -------------------------------------------
 
 
-to do"
+to do:
+publish - subsriber - zrobic konfiguracje dla :
+DrugiServiceActivatorDoPublishSubsriber
+
 --junit best practises:
 http://www.kyleblaney.com/junit-best-practices/
 

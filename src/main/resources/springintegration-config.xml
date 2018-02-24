@@ -11,24 +11,22 @@
 
 	<integration:channel id="inboundChannel"></integration:channel>
 	<integration:channel id="canonicalChannel"></integration:channel>
-	
-	<!-- kanał asynchroniczny - przez dodanie kolejki, która buforuje
-	Osobny wątek jest wykorzystaywany do pobierania z kolejki niż do wsadzania. 
-	https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html
-		 -->
+
+	<!-- kanał asynchroniczny - przez dodanie kolejki, która buforuje Osobny 
+		wątek jest wykorzystaywany do pobierania z kolejki niż do wsadzania. https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html -->
 	<integration:channel id="wsCountryRequestChannel">
-		<integration:queue capacity="5"/>
+		<integration:queue capacity="5" />
 	</integration:channel>
 	<integration:channel id="serviceActivatorChannel">
-			<integration:queue capacity="5"/>
+		<integration:queue capacity="5" />
 	</integration:channel>
 	<integration:channel id="wsCountryResponseChannel"></integration:channel>
 	<integration:channel id="wsOutboundGataway"></integration:channel>
 
-<!-- globalny pooler
-You have several queue channels. To receive Messages from them you should configure <poller>: global one, or for each component, which are subscribed to those queues: Poller Configuration, Poller sample
- -->
-<integration:poller default="true" fixed-delay="50"/>
+	<!-- globalny pooler You have several queue channels. To receive Messages 
+		from them you should configure <poller>: global one, or for each component, 
+		which are subscribed to those queues: Poller Configuration, Poller sample -->
+	<integration:poller default="true" fixed-delay="50" />
 
 	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt -->
 	<jms:message-driven-channel-adapter
@@ -77,17 +75,14 @@ You have several queue channels. To receive Messages from them you should config
 	<!-- soap 1.1 wymaga naglówka soapAction -->
 	<int-ws:header-enricher id="soapHeaderEnricher"
 		input-channel="wsOutboundGataway" output-channel="wsCountryEnricherRequestChannel">
-		<int-ws:soap-action
-			value="${webservice.soap-action}" />
+		<int-ws:soap-action value="${webservice.soap-action}" />
 	</int-ws:header-enricher>
 
 	<!-- gateway web service output. na wejsciu wiadomosc obiekt będący paremetrem 
 		wywoływanej uslugi. czyli request z jaxb -->
-	<!-- zmienic uri na parametr -->
 	<int-ws:outbound-gateway id="wsOutCountry"
 		request-channel="wsCountryEnricherRequestChannel" reply-channel="wsCountryResponseChannel"
-		uri="${webservice.uri}" marshaller="wsCountryMarshaller"
-		unmarshaller="wsCountryUnmarshaller" />
+		uri="${webservice.uri}" marshaller="wsCountryMarshaller" unmarshaller="wsCountryUnmarshaller" />
 
 
 	<!-- marshaller dla usługi WS. Obiekt - paremetr wywolania metody uslugi 
