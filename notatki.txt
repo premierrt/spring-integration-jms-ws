@@ -12,24 +12,22 @@ dodać kolejkę recznie zeby testow
 
 
 to do:
-publish - subsriber - zrobic konfiguracje dla :
-DrugiServiceActivatorDoPublishSubsriber
-
+--chains
 --junit best practises:
 http://www.kyleblaney.com/junit-best-practices/
 
 --spring profile
--dodac publish subscribe w spring integration w ramach aplikacji czyli 2 service activatory na przyklad 
--z executorem
 -dodac publish subsrcibe na activeMQ - czyli 2 aplikacje zasubskrybowane na topic
 -dodac junit dla transformatorow, servicow
 
 
 
-
-+-dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
-*************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
-+dodane queue do channela 
+++publish - subsriber - zrobic konfiguracje dla :
+	DrugiServiceActivatorDoPublishSubsriber
+	https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html
+++dodac jakas ronowloeglosc, bo najpierw jest  robiona cala sciezka rozgalezienia z WS, a ponziej dopiero dolna wypisujaca 
+	*************WSCustomerVO [country=POLAND] as of 2018/02/17 23:32:51 ***********  
+++dodane queue do channela 
 
 --dopisać junity!!!
 +-dopisac asercje i outbound capture:

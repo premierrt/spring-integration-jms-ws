@@ -2,26 +2,41 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/integration/jms"
 	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:int-ws="http://www.springframework.org/schema/integration/ws"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
        http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
        http://www.springframework.org/schema/oxm  http://www.springframework.org/schema/oxm/spring-oxm.xsd       
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
          http://www.springframework.org/schema/integration/ws http://www.springframework.org/schema/integration/ws/spring-integration-ws.xsd">
 
 	<integration:channel id="inboundChannel"></integration:channel>
 	<integration:channel id="canonicalChannel"></integration:channel>
 
-	<!-- kanał asynchroniczny - przez dodanie kolejki, która buforuje Osobny 
-		wątek jest wykorzystaywany do pobierania z kolejki niż do wsadzania. https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html -->
+	<!-- kanał asynchroniczny - przez dodanie kolejki, która buforuje Osobny wątek jest wykorzystaywany do pobierania z kolejki niż do wsadzania. wymaga skonfigurowania poolera.
+		 https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html 
+		     QueueChannel: Implements PollableChannel. There’s one endpoint connected to the channel, no subscribers. This communication is asynchronous; the receiver will retrieve the message through a different thread. How it works:
+        The producer sends the message to the channel, The channel queues the message,  The consumer actively retrieves the message (active receiver)-->
 	<integration:channel id="wsCountryRequestChannel">
 		<integration:queue capacity="5" />
 	</integration:channel>
+	
+	<!-- zamiast tego uzyto publish-subsribera -->
+	<!-- 
 	<integration:channel id="serviceActivatorChannel">
 		<integration:queue capacity="5" />
 	</integration:channel>
+	 -->
 	<integration:channel id="wsCountryResponseChannel"></integration:channel>
 	<integration:channel id="wsOutboundGataway"></integration:channel>
+
+
+<!-- Subscribed receivers can be invoked consecutively through the producer’s thread. If we specify a TaskExecutor, receivers will be invoked in parallel through different threads. -->
+	<!-- https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html -->
+	<integration:publish-subscribe-channel id="publishSubsriberChannel" task-executor="executor1"></integration:publish-subscribe-channel>
+	<task:executor id="executor1" pool-size="5"/>
+
 
 	<!-- globalny pooler You have several queue channels. To receive Messages 
 		from them you should configure <poller>: global one, or for each component, 
@@ -61,7 +76,7 @@
 	<integration:recipient-list-router
 		id="listRouter" input-channel="canonicalChannel">
 		<integration:recipient channel="wsCountryRequestChannel" />
-		<integration:recipient channel="serviceActivatorChannel" />
+		<integration:recipient channel="publishSubsriberChannel" />
 	</integration:recipient-list-router>
 
 	<!-- transformuje message na obiekt klasy która na wejsciu przyjmuje webservice 
@@ -105,8 +120,13 @@
 	</integration:outbound-channel-adapter>
 
 	<integration:service-activator id="serviceActivator"
-		input-channel="serviceActivatorChannel" ref="inboundService" method="processInput">
+		input-channel="publishSubsriberChannel" ref="inboundService" method="processInput">
 	</integration:service-activator>
+	
+	
+	<integration:outbound-channel-adapter id="drugiServiceActivatorOutboudAdapter"
+	channel="publishSubsriberChannel" ref="drugiServiceActivatorDoPublishSubsriber" method="processMessage">	
+	</integration:outbound-channel-adapter>
 
 
 </beans>
