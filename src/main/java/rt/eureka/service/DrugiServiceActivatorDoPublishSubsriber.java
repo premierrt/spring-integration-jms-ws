@@ -9,11 +9,11 @@ import rt.eureka.model.WSCustomerVO;
 @Service
 public class DrugiServiceActivatorDoPublishSubsriber {
 
-	private static final Log log = LogFactory.getLog(DrugiServiceActivatorDoPublishSubsriber.class);
+	private static  final Log log = LogFactory.getLog(DrugiServiceActivatorDoPublishSubsriber.class);
 	
 	public void processMessage(WSCustomerVO wsCustomerVO){
 		String payload = wsCustomerVO.getCountry();
 		payload = payload.concat(" alholand");
-		
+		log.info(payload);
 	}
 }
