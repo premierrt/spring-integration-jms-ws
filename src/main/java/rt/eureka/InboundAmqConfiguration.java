@@ -20,7 +20,7 @@ public class InboundAmqConfiguration {
 	}
 	
 	@Bean
-	public Topic rtInboudTopic(){
+	public Topic rtInboundTopic(){
 		return new ActiveMQTopic( TOPIC_NAME);
 	}
 

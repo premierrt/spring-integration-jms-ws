@@ -44,8 +44,16 @@
 	<integration:poller default="true" fixed-delay="50" />
 
 	<!-- adapter ze wskazaniem jaxb convertera -konwertuje xml na obiekt -->
+	<!-- dla kolejki -->
+<!-- 
 	<jms:message-driven-channel-adapter
 		id="jmsInboundAdapter" destination="rtInboundQueue" channel="inboundChannel"
+		connection-factory="jmsConnectionFactory" message-converter="jaxbConverter" />
+ -->
+ 
+<!-- dla Topica` -->
+<jms:message-driven-channel-adapter
+		id="jmsInboundAdapter" destination="rtInboundTopic" pub-sub-domain="true" channel="inboundChannel"
 		connection-factory="jmsConnectionFactory" message-converter="jaxbConverter" />
 
 

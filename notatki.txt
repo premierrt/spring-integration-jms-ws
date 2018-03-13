@@ -2,13 +2,31 @@
 klient jms activemq (canoncial model ) ---> spring integration  --> gateway WS outbound
 _______________________________
 how to run:
+1. uruchomic 2 instancje fat jar
+2. uruchomic serwer acrivemq
+3. wystrzelic do topica xmla 
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customerCanonical>
+    <adress>Polska</adress>
+    <id>1</id>
+    <name>rafal</name>
+    <yearOfBirth>0</yearOfBirth>
+</customerCanonical>
+
+
 /home/rafal/sts-devel-projekty/spring_boot_si_jms_consumer
 mvn test
+mvn package -- buduje jara do katalogu target
+mvn -Dmaven.test.skip=true package - pomija testy -jak nie pominie to wysypuje sie na testach i nie zbuduje paczki
 
 /home/rafal/Pobrane/apache-activemq-5.15.2/bin/activemq start
 http://127.0.0.1:8161/admin/index.jsp
 dodać kolejkę recznie zeby testow
 -------------------------------------------
+
+
+
+
 
 
 to do:
